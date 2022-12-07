@@ -1,5 +1,8 @@
 from Patrulla import Patrulla 
 from Evento import Evento
+import requests
+
+
 class Map:
     patrullas = []
     evento = None
@@ -16,24 +19,28 @@ class Map:
         print("Patrullas creadas")
         self.patrullas = arr
 
-    def createEvento(self, evento):
+    def createEvento(self):
         print("ingrese la infomacion del evento")
         lat = float(input("Ingrese la latitud: "))
         long = float(input("Ingrese la longitud: "))
-        self.evento = evento(lat, long)
+        self.evento = Evento(lat, long)
 
     #INCOMPLETO
-    def distancePatrullaEvento(self, patrulla):
+    def distancePatrullaEvento(self, patrulla, evento):
 
-        return 0
-        # url = "https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyCu6N_Jv75wSs8TnytapVPub3oSycUPBzk"
-        # payload={}
-        # headers = {}
-        # response = requests.request("GET", url, headers=headers, data=payload)
-        # cosa = response.json()["routes"][0]["legs"][0]["end_location"]
-        # cosa2 = response.json()["routes"][0]["legs"][0]["start_location"]
-        # print(cosa)
-        # print(cosa2)
+        #origin=41.43206,-81.38992
+        # return 0
+        url = f"https://maps.googleapis.com/maps/api/directions/json?origin={patrulla.lat},{patrulla.long}&destination={evento.lat},{evento.long}&key=AIzaSyCu6N_Jv75wSs8TnytapVPub3oSycUPBzk"
+        payload={}
+        headers = {}
+        response = requests.request("GET", url, headers=headers, data=payload)
+        cosa = response.json()["routes"][0]["legs"][0]["end_location"]
+        cosa2 = response.json()["routes"][0]["legs"][0]["start_location"]
+        distance = response.json()["routes"][0]["legs"][0]["distance"]["text"]
+        
+        print(distance)
+        print(cosa)
+        print(cosa2)
     
     #INCOMPLETO
     def atenciondeEvento(self):
@@ -46,3 +53,7 @@ class Map:
         return 0
     
 cosa = Map()
+
+cosa.createEvento()
+
+cosa.distancePatrullaEvento(cosa.patrullas[0], cosa.evento)
