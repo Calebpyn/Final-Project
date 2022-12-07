@@ -1,8 +1,6 @@
 Coordenadas Reales
 
 Posibles Accidentes:
-Casa Caleb:
-31.872245, -116.612650
 
 CETYS:
 31.876204, -116.653959
