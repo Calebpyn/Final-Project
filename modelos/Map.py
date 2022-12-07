@@ -23,7 +23,23 @@ class Map:
     lat = float(input("Ingrese la latitud: "))
     long = float(input("Ingrese la longitud: "))
     self.evento = Evento(lat, long)
-
+    
+  def getDoubleDistance(distancia):
+    nums = ['0','1','2','3','4','5','6','7','8','9','.']
+    i = 0
+    finalNum = ""
+    while distancia[i] in nums:
+      finalNum += distancia[i]
+      i += 1
+    return float(finalNum)
+  
+  def atenciondeEvento(patrullas, patrullaDistancia):
+    minimum = patrullas[0]
+    for key in patrullaDistancia.keys():
+      if patrullaDistancia[key] < patrullaDistancia[minimum]:
+        minimum = key
+    return minimum
+ 
   def distancePatrullaEvento(self, patrullas, evento):
     patrullaDistancia = {}
     for i in range(len(patrullas)):
@@ -34,16 +50,11 @@ class Map:
       locacionEvento = response.json()["routes"][0]["legs"][0]["end_location"]
       carroPolicia = response.json()["routes"][0]["legs"][0]["start_location"]
       distance = response.json()["routes"][0]["legs"][0]["distance"]["text"]
-      patrullaDistancia[patrullas[i]] = distance
+      patrullaDistancia[patrullas[i]] = Map.getDoubleDistance(distance)
       
-      print(patrullaDistancia)
-        
-    #INCOMPLETO
-  def atenciondeEvento(self, distancias):
-    #aqui es donde definimos que patrulla es la que va a atender el evento
-    if self.evento == None:
-      print("no se ha creado un evento")
-    return 0
+    print(patrullaDistancia)
+    print("La patrulla mas cercana es: ")
+    print(Map.atenciondeEvento(patrullas, patrullaDistancia))
 
     #INCOMPLETO
   def getPerformance():
