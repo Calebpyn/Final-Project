@@ -56,9 +56,10 @@ class Map:
     print("La patrulla mas cercana es: ")
     print(Map.atenciondeEvento(patrullas, patrullaDistancia))
 
-    #INCOMPLETO
-  def getPerformance():
-    return 0
+  def radioDistancia(distancia, r1, r2):
+    interseccion = distancia - (r1 + r2)
+    return interseccion
+      
 
 cosa = Map()
 cosa.createEvento()
